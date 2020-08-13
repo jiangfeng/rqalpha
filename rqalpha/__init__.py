@@ -103,24 +103,27 @@ def run_func(**kwargs):
     from rqalpha.utils.functools import clear_all_cached_functions
     from rqalpha.utils.config import parse_config
     from rqalpha import main
-
+    """获取函数config参数, 包含回测主要信息"""
     config = kwargs.get('config', kwargs.get('__config__', None))
+    """将回测信息转换为dict格式user_funcs = {"init": init, "handle_bar": handle_bar, ......}"""
     user_funcs = {
         k: kwargs[k]
         for k in ['init', 'handle_bar', 'handle_tick', 'open_auction', 'before_trading', 'after_trading']
         if k in kwargs
     }
-
     if config is None:
         config = {}
     else:
         assert isinstance(config, dict)
         try:
+            """非run_file模式删除strategy_file参数"""
             del config["base"]["strategy_file"]
         except:
             pass
     config = parse_config(config, user_funcs=user_funcs)
+    """清除函数缓冲"""
     clear_all_cached_functions()
+    """直接运行主函数"""
     return main.run(config, user_funcs=user_funcs)
 
 
