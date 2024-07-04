@@ -189,7 +189,7 @@ class HEDGE_TYPE(CustomEnum):
 # noinspection PyPep8Naming
 class DAYS_CNT(object):
     DAYS_A_YEAR = 365
-    TRADING_DAYS_A_YEAR = 252
+    TRADING_DAYS_A_YEAR = 242
 
 
 class EXCHANGE(CustomEnum):
